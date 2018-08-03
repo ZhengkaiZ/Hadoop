@@ -14,7 +14,11 @@ import org.apache.hadoop.io.WritableComparable;
 public class FriendPair implements WritableComparable {
 	Friend first;
 	Friend second;
-	
+	public FriendPair() {
+		first = new Friend();
+		second = new Friend();
+	}
+
 	public FriendPair(Friend f1, Friend f2) {
 		first = f1;
 		second = f2;

@@ -18,9 +18,9 @@ public class Friend implements WritableComparable {
 	private Text hometown;
 	
 	public Friend() {
-		id = null;
-		name = null;
-		hometown = null;
+		id = new IntWritable();
+		name = new Text();
+		hometown = new Text();
 	}
 	
 	public Friend(IntWritable id, Text name, Text hometown) {

@@ -5,7 +5,6 @@ package Practice.CommonFriend;
 
 import org.apache.hadoop.io.Writable;
 
-import java.util.Arrays;
 
 import org.apache.hadoop.io.ArrayWritable;
 

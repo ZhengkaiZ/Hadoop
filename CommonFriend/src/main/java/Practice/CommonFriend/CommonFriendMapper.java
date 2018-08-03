@@ -3,13 +3,13 @@ package Practice.CommonFriend;
 
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.log4j.Logger;
-import org.apache.taglibs.standard.lang.jstl.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.hadoop.io.IntWritable;
@@ -30,7 +30,8 @@ public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, F
 		String[] input = value.toString().split("\t");
 		Friend thisPerson = getPerson(input[0]);
 		List<Friend> friendList = getFriendArray(input[1]);
-		Friend[] temp = (Friend[]) friendList.toArray();
+		// Friend[] class
+		Friend[] temp = Arrays.copyOf(friendList.toArray(), friendList.size(), Friend[].class);
 		FriendArray friends = new FriendArray(Friend.class, temp);
 
 		for (Friend friend : friendList) {
@@ -52,8 +53,8 @@ public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, F
 		JSONObject jsonObj;
 		try {
 			jsonObj = (JSONObject) parser.parse(input);
-	
-			IntWritable id = new IntWritable((Integer) jsonObj.get("id"));
+			Long temp = (Long) jsonObj.get("id");
+			IntWritable id = new IntWritable(temp.intValue());
 			Text name = new Text((String) jsonObj.get("name"));
 			Text hometown = new Text((String) jsonObj.get("hometown"));
 
@@ -79,9 +80,9 @@ public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, F
 			JSONArray jsonArray = (JSONArray) parser.parse(input);
 	
 			for (Object obj : jsonArray) {
-
 				JSONObject jsonObj = (JSONObject) obj;
-				IntWritable id = new IntWritable((Integer) jsonObj.get("id"));
+				Long temp = (Long) jsonObj.get("id");
+				IntWritable id = new IntWritable(temp.intValue());
 				Text name = new Text((String) jsonObj.get("name"));
 				Text hometown = new Text((String) jsonObj.get("hometown"));
 				result.add(new Friend(id, name, hometown));
