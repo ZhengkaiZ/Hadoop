@@ -76,7 +76,7 @@ public class Friend implements WritableComparable {
 			throw new IllegalArgumentException();
 		}
 		Friend temp = (Friend) o;
-		return id.compareTo(temp.id);
+		return idGetter().compareTo(temp.idGetter());
 	}
 	@Override
 	public boolean equals(Object o) {
@@ -85,15 +85,14 @@ public class Friend implements WritableComparable {
 		}
 
 		Friend temp = (Friend) o;
-		return id.equals(temp.id);
+		return idGetter().equals(temp.idGetter());
 	}
 	@Override
 	public String toString() {
-
 		StringBuilder sb = new StringBuilder();
-		sb.append("id:" + id.toString());
-		sb.append("name: " + name.toString());
-		sb.append("hometown:" + hometown.toString());
+		sb.append("{id: " + id.toString() + " ");
+		sb.append("name: " + name.toString() + " ");
+		sb.append("hometown: " + hometown.toString() + "}");
 		return sb.toString();
 	}
 }

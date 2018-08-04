@@ -29,10 +29,12 @@ public class FriendArray extends ArrayWritable {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		String[] strings = this.toStrings();
+		sb.append("[");
 		for (String s : strings) {
 			sb.append(s);
+			sb.append(" ");
 		}
-		
+		sb.append("]\n");
 		return sb.toString();
 	}
 	

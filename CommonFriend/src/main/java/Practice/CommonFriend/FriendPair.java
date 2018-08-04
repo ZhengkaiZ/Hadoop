@@ -44,19 +44,19 @@ public class FriendPair implements WritableComparable {
 		}
 		
 		FriendPair temp = (FriendPair) o;
-		if (first.idGetter().equals(temp.first.idGetter()) || 
-				second.idGetter().equals(second.idGetter())) {
+		if (first.idGetter().equals(temp.first.idGetter()) && 
+				second.idGetter().equals(temp.second.idGetter())) {
 			return 0;
 		}
 		
-		if (first.idGetter().equals(temp.second.idGetter()) || 
-				second.idGetter().equals(first.idGetter())) {
+		if (first.idGetter().equals(temp.second.idGetter()) && 
+				second.idGetter().equals(temp.first.idGetter())) {
 			return 0;
 		}
 
-		return first.idGetter().compareTo(temp.first.idGetter());
+		return -1;
 	}
-	
+
 	@Override
 	public String toString() {
 		return first.toString() + " " + second.toString();

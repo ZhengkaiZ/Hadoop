@@ -10,25 +10,32 @@ import java.util.List;
 
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
+import org.apache.hadoop.io.Text;
 
 /**
- * @author zhengkaizhang
+ * @author Zhengkai Zhang
  *
  */
+
+	
 public class CommonFriendReducer extends Reducer<FriendPair, FriendArray, FriendPair, FriendArray> {
+	public enum Volume {
+		High_Volume
+	}
+
+
 	@Override
 	public void reduce(FriendPair key, Iterable<FriendArray> values, Context context) throws IOException, InterruptedException {
 		Logger log = Logger.getLogger(CommonFriendReducer.class);
 
 		List<Friend[]> friendArrayList = new ArrayList<Friend[]>();
-		int temp = 0;
 		for (FriendArray friendArray : values) {
 			Friend[] tempArray = Arrays.copyOf(friendArray.get(), friendArray.get().length, Friend[].class);
 			friendArrayList.add(tempArray);
-			temp++;
 		}
-	
-		if (temp != 2) {
+
+
+		if (friendArrayList.size() != 2) {
 			log.debug("Invalid Data");
 			return;
 		}
@@ -42,6 +49,9 @@ public class CommonFriendReducer extends Reducer<FriendPair, FriendArray, Friend
 					friendList.add(friend1);
 				}
 			}
+		}
+		if (true) {
+			context.getCounter(Volume.High_Volume).increment(1);
 		}
 		Friend[] tempArray2 = Arrays.copyOf(friendList.toArray(), friendList.size(), Friend[].class);
 		FriendArray result = new FriendArray(Friend.class, tempArray2);

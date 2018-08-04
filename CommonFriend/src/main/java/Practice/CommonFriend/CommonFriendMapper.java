@@ -22,10 +22,11 @@ import org.apache.hadoop.io.Text;
  * Learn Hadoop from Online Course from Hadoop in real world.
  */
 
+
 public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, FriendArray> {
+
 	@Override
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-		Logger log = Logger.getLogger(CommonFriendMapper.class);
 		
 		String[] input = value.toString().split("\t");
 		Friend thisPerson = getPerson(input[0]);
@@ -37,7 +38,6 @@ public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, F
 		for (Friend friend : friendList) {
 			FriendPair fp = new FriendPair(thisPerson, friend);
 			context.write(fp, friends);
-			log.info(fp + "  " + friends);
 		}
 	}
 	/**
@@ -57,7 +57,6 @@ public class CommonFriendMapper extends Mapper<LongWritable, Text, FriendPair, F
 			IntWritable id = new IntWritable(temp.intValue());
 			Text name = new Text((String) jsonObj.get("name"));
 			Text hometown = new Text((String) jsonObj.get("hometown"));
-
 			result = new Friend(id, name, hometown);
 		} catch (org.json.simple.parser.ParseException e) {
 			// TODO Auto-generated catch block

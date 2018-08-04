@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -39,7 +40,7 @@ public class CommonFriendDriver extends Configured implements Tool {
 		FileOutputFormat.setOutputPath(commonFriend, new Path(args[1]));
 		
 		commonFriend.setInputFormatClass(TextInputFormat.class);
-		commonFriend.setOutputFormatClass(SequenceFileOutputFormat.class);
+		commonFriend.setOutputFormatClass(TextOutputFormat.class);
 
 		//Mapper-Reducer-Combiner specifications
 		commonFriend.setMapperClass(CommonFriendMapper.class);
@@ -48,13 +49,16 @@ public class CommonFriendDriver extends Configured implements Tool {
 		commonFriend.setMapOutputKeyClass(FriendPair.class);
 		commonFriend.setMapOutputValueClass(FriendArray.class);
 
+
 		//Output key and value
-		commonFriend.setOutputKeyClass(FriendPair.class);
-		commonFriend.setOutputValueClass(FriendArray.class);
+//		commonFriend.setOutputKeyClass(FriendPair.class);
+//		commonFriend.setOutputValueClass(FriendArray.class);
+		commonFriend.setOutputKeyClass(Text.class);
+		commonFriend.setOutputValueClass(Text.class);
 		
 		//Submit job
 		return commonFriend.waitForCompletion(true) ? 0 : 1;
-		
+
 	}
 
 	public static void main(String[] args) throws Exception {
